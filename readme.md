@@ -6,7 +6,10 @@ to point your editor as files as you're slinging around a project, use edi.
 edi is configured with `edi set [file]` which will have edi open `file` when the main
 `edi` command is typed.
 
+##Installation notes:
+
+Just put edi in your path. I did this with ``ln -s `pwd`/edi ~/bin/``
+
 ##Todos:
  * Make edi have queue and stack based editing
  * Make edi automatically queue conflicting files in a git merge situation
-
