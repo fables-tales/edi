@@ -2,21 +2,79 @@
 
 import os
 import sys
+import subprocess
 
+def invoke_editor(file):
+    if os.environ.has_key("EDITOR"):
+        os.system("$EDITOR " + file)
+    else:
+        os.system("vim " + file)
 
 def edit():
     try:    
         f = open(".edirc")
-        file = f.read().strip() 
-        if file == "":
-            print "the edi file is empty"
-            sys.exit(1)
-        if os.environ.has_key("EDITOR"):
-            os.system("$EDITOR " + file)
-        else:
-            os.system("vim " + file)
+        if not in_git_repo():
+            file = f.read().strip() 
+            if file == "":
+                print "the edi file is empty"
+                sys.exit(1)
+            else:
+                invoke_editor(file)
+        else:   
+            f = open(".edirc", "r")
+            data = f.read().strip().split("\n")
+            u = get_git_username()
+            for line in data:
+                if line.split(":")[0] == u:
+                    file = line.split(":")[1].strip()
+                    invoke_editor(file)
+                    
+                     
     except:
         print "edi is not configured, use edi set file"
+    
+def in_git_repo():
+    return os.system("git status > /dev/null") == 0 
+
+def have_edi_file():
+    return os.path.exists(".edirc")
+
+def get_git_username():
+    name = subprocess.Popen(["git","config","--get","user.name"],stdout=subprocess.PIPE)
+    name.wait()
+    return name.stdout.read().strip()
+        
+
+def update_edi_file(filename):
+        
+    if in_git_repo():
+        found = False
+        new_data = []
+        username = get_git_username()
+        if have_edi_file(): 
+            f = open(".edirc", "r")
+            data = f.read().strip().split("\n")
+            for line in data:
+                if line.split(":")[0] == username:
+                    new_data.append(username + ":" + filename + "\n") 
+                    found = True
+                else:
+                    new_data.append(line)
+
+        if not found:
+            new_data.append(username + ":" + filename + "\n")
+        f = open(".edirc", "w")
+        f.write(("\n".join(new_data)).strip())
+        f.write("\n")
+        f.flush()
+        f.close()
+        
+    else:
+     
+        f = open(".edirc", "w")
+        f.write(filename + "\n")
+        f.flush()
+        f.close()
     
 if __name__ == "__main__":
     if len(sys.argv) == 1:
@@ -28,7 +86,4 @@ if __name__ == "__main__":
             print "* `edi set [file]` - sets edi to use a file"
             
         if len(sys.argv) == 3 and sys.argv[1] == "set":
-            f = open(".edirc", "w")
-            f.write(sys.argv[2] + "\n")
-            f.flush()
-            f.close()
+            update_edi_file(sys.argv[2] + "\n")
