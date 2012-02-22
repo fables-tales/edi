@@ -10,6 +10,12 @@ def invoke_editor(file):
     else:
         os.system("vim " + file)
 
+def convert_old_edi_file(data):
+    print "converting old .edirc file to new format"
+    filename = data.split("\n")[0].strip()
+    os.remove(".edirc")
+    update_edi_file(filename)
+
 def edit():
     try:    
         f = open(".edirc")
@@ -22,8 +28,20 @@ def edit():
                 invoke_editor(file)
         else:   
             f = open(".edirc", "r")
-            data = f.read().strip().split("\n")
+            data = f.read().strip()
+            if data == "":
+                print "the edi file is empty"
+                sys.exit(1)
+            if data.find(":") == -1:
+                convert_old_edi_file(data)
+                f.close()
+                f = open(".edirc", "r")
+                data = f.read().strip()
+            
+            data = data.split("\n")        
+    
             u = get_git_username()
+            
             for line in data:
                 if line.split(":")[0] == u:
                     file = line.split(":")[1].strip()
