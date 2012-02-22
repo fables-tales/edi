@@ -7,7 +7,7 @@ also found it useful when working on subdirectories within a project: if that su
 contains only a single file I care about right now I edi it. 
 
 edi is configured with `edi set [file]` which will have edi open `file` when the main
-`edi` command is typed.
+`edi` command is typed. Edi opens the file in whatever editor is defined in `$EDITOR`
 
 **Edi configuration is written/read into/from the current directory**
 
