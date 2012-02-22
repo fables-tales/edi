@@ -103,6 +103,7 @@ if __name__ == "__main__":
             print "This is edi, usage is:"
             print "* `edi` - opens whatever file edi is configured to use"
             print "* `edi set [file]` - sets edi to use a file"
+            print "* `edi [--help/-h]` - displays this message"
             
         if len(sys.argv) == 3 and sys.argv[1] == "set":
             update_edi_file(sys.argv[2] + "\n")
