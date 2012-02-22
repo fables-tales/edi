@@ -1,7 +1,11 @@
 #edi
 
-edi is a simple command line tool that attempts to boost productivity. Instead of having
-to point your editor as files as you're slinging around a project, use edi.
+
+
+edi is a simple command line tool that attempts to boost productivity. I found that
+when I was working on single file projects typing the entire filename was annoying. I've
+also found it useful when working on subdirectories within a project: if that subdir
+contains only a single file I care about right now I edi it. 
 
 edi is configured with `edi set [file]` which will have edi open `file` when the main
 `edi` command is typed.
