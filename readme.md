@@ -1,15 +1,11 @@
 #edi
 
+When you run edi for the first time type `edi set [file]`. Then when you run `edi` in
+the same directory edi will open that file in whichever editor is defined with $EDITOR.
+It's designed to make it easier to work with single file projects or projects with many
+subdirectories with few files in them.
 
-edi is a simple command line tool that attempts to boost productivity. I found that
-when I was working on single file projects typing the entire filename was annoying. I've
-also found it useful when working on subdirectories within a project: if that subdir
-contains only a single file I care about right now I edi it. 
-
-edi is configured with `edi set [file]` which will have edi open `file` when the main
-`edi` command is typed. Edi opens the file in whatever editor is defined in `$EDITOR`
-
-**Edi configuration is written/read into/from the current directory**
+edi configuration only applies to your current working directory
 
 edi is git aware. Each person gets their own edi line, and this means that you can
 specify your favourite files to be opened with edi
