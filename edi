@@ -98,7 +98,8 @@ if __name__ == "__main__":
     if len(sys.argv) == 1:
         edit()
     else:
-        if len(sys.argv) == 2 and sys.argv[1] == "--help":
+        if len(sys.argv) == 2 and (sys.argv[1] == "--help"
+                                or sys.argv[1] == "-h"):
             print "This is edi, usage is:"
             print "* `edi` - opens whatever file edi is configured to use"
             print "* `edi set [file]` - sets edi to use a file"
