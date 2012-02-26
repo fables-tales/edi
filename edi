@@ -52,7 +52,7 @@ def edit():
         print "edi is not configured, use edi set file"
     
 def in_git_repo():
-    return os.system("git status 2> /dev/null") == 0 
+    return os.path.exists(".git")
 
 def have_edi_file():
     return os.path.exists(".edirc")
